@@ -18,10 +18,10 @@ $db = 'burger';
 
 try {
     $pdo = new PDO("mysql:host=$host; dbname=$db", $login, '');
-
-if (empty($_REQUEST['name']) or empty($_REQUEST['email'])) {
-    echo '<pre>' . print_r("$_REQUEST[name]  $_REQUEST[email]", 1) . '</pre>';
+} catch (PDOException $e) {
+    echo $e->getMessage();
 }
+
 
 $userName = $_REQUEST['name'] ?? '';
 $userEmail = $_REQUEST['email'] ?? '';
@@ -29,7 +29,7 @@ $userPhone = $_REQUEST['phone'] ?? '';
 $userStreet = $_REQUEST['street']?? '';
 $userHome = $_REQUEST['home'] ?? '';
 $userPart = $_REQUEST['part'] ?? '';
-$userFloor = $_REQUEST['floor' ?? 0];
+$userFloor = $_REQUEST['floor'] ?? 0;
 $userAppt = $_REQUEST['appt'] ?? 0;
 $userComment = $_REQUEST['comment'] ?? '';
 $payment = $_REQUEST['payment'] ?? '';
@@ -39,7 +39,11 @@ $messageFirstOrder = 'Спасибо - это ваш первый заказ!';
 $message = '';
 $firstOrder=0;
 
-if ($userEmail && ($secure = 1)) {
+/*if (empty($_REQUEST['name']) or empty($_REQUEST['email'])) {
+    echo '<pre>' . print_r($_REQUEST['name'] . $_REQUEST['email'], 1) . '</pre>';
+}*/
+
+if ($userEmail) {
     $queryEmail = $pdo->prepare("SELECT *  FROM customers WHERE email = :user_email");
     $queryEmail->execute(['user_email' => $userEmail]);
     $email = $queryEmail->fetchAll(PDO::FETCH_ASSOC);
@@ -91,9 +95,7 @@ EOD;
 
     $mailCustomer = file_put_contents('order.log', $message);
 }
-} catch (PDOException $e) {
-    echo $e->getMessage();
-}
+
 
 ?>
 

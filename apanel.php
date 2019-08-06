@@ -25,12 +25,13 @@ padding: 10px;
 margin: 2px 5px;
 text-align: center;
 }</style>";
-    echo "<table><caption>АДМИН ПАНЕЛЬ</caption><tr><th>customer id</th><th>customer name</th><th>order id</th><th>address</th><th>comment</th><th>payment</th><th>callback</th><th>order date</th></tr>";
-    do {
-        $allOrders = $queryAllOrders->fetch(PDO::FETCH_ASSOC);
-        echo "<tr>", "<td>$allOrders[id]</td><td>$allOrders[name]</td><td>$allOrders[order_number]</td><td>$allOrders[address]</td><td>$allOrders[comment]</td><td>$allOrders[payment]</td><td>$allOrders[callback]</td><td>$allOrders[date]</td>", "</tr>";
-    } while (!empty($allOrders));
+    echo "<table><caption>АДМИН ПАНЕЛЬ</caption><tr><th>номер заказа</th><th>имя клиента</th><th>номер клиента</th><th>адресс доставки</th><th>коментарий</th><th>оплата</th><th>перезвонивать клиенту</th><th>дата заказа</th></tr>";
 
+    $allOrders = $queryAllOrders->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($allOrders as $order) {
+        //echo "$order[$orderName]";
+        echo "<tr>" . "<td>{$order['order_number']}</td><td>{$order['name']}</td><td>{$order['id']}</td><td>{$order['address']}</td><td>{$order['comment']}</td><td>{$order['payment']}</td><td>{$order['callback']}</td><td>{$order['date']}</td>" . "</tr>";
+    }
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
