@@ -1,0 +1,9 @@
+{"autoload": {
+  "psr-4": {  }
+},
+  "require": {
+    "twig/twig": "^2.11",
+    "0.0.0/composer-include-files": "1.5.0",
+    "swiftmailer/swiftmailer": " ^6.0"
+  }
+}

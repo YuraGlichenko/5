@@ -1,0 +1,11 @@
+<table>
+    <caption>АДМИН ПАНЕЛЬ</caption>
+    <tr>
+        <th>номер заказа</th><th>имя клиента</th><th>номер клиента</th><th>адресс доставки</th><th>коментарий</th><th>оплата</th><th>перезвонивать клиенту</th><th>дата заказа</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order }}</td><td>{{order.name}}</td><td>{{order.id}}</td><td>{{order.address}}</td><td>{{order.comment}}</td><td>{{order.payment}}</td><td>{{order.callback}}</td><td>{{ order.date}}</td>
+    </tr>
+    {% endfor %}}
+</table>

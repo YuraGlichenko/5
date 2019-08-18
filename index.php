@@ -51,6 +51,8 @@ if ($userEmail) {
     if (empty($email)) {
         $req = $pdo->query("INSERT INTO customers (`name`, email) VALUES ('$userName', '$userEmail')");
         echo 'Вы зарегистророваны! ' . $userEmail;
+        $mailer = new swiftMailer();
+        $massage = $mailer->senderEmail($userName, $userEmail);
         $firstOrder=1;
     } else {
         echo 'Вы авторизированы ', $userEmail . PHP_EOL;

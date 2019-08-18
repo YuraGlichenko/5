@@ -1,8 +1,13 @@
 <?php
+require "vendor/autoload.php";
+
 $host = 'localhost';
 $login = 'root';
 $password = '';
 $db = 'burger';
+
+$loader = new Twig\Loader\FilesystemLoader(['.']);
+$twig = new Twig_Environment($loader);
 
 try {
     $pdo = new PDO("mysql:host=$host; dbname=$db", $login, '');
@@ -25,13 +30,15 @@ padding: 10px;
 margin: 2px 5px;
 text-align: center;
 }</style>";
-    echo "<table><caption>АДМИН ПАНЕЛЬ</caption><tr><th>номер заказа</th><th>имя клиента</th><th>номер клиента</th><th>адресс доставки</th><th>коментарий</th><th>оплата</th><th>перезвонивать клиенту</th><th>дата заказа</th></tr>";
+   // echo "<table><caption>АДМИН ПАНЕЛЬ</caption><tr><th>номер заказа</th><th>имя клиента</th><th>номер клиента</th><th>адресс доставки</th><th>коментарий</th><th>оплата</th><th>перезвонивать клиенту</th><th>дата заказа</th></tr>";
 
     $allOrders = $queryAllOrders->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($allOrders as $order) {
-        //echo "$order[$orderName]";
+    //var_dump($allOrders);
+
+    $twig->render("table.twig", ['orders' => $allOrders]);
+   /* foreach ($allOrders as $order) {
         echo "<tr>" . "<td>{$order['order_number']}</td><td>{$order['name']}</td><td>{$order['id']}</td><td>{$order['address']}</td><td>{$order['comment']}</td><td>{$order['payment']}</td><td>{$order['callback']}</td><td>{$order['date']}</td>" . "</tr>";
-    }
+    }*/
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
